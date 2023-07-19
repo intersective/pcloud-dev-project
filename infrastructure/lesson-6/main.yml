@@ -10,13 +10,11 @@ Metadata:
       Reserved.
 
 Parameters:
+  BucketName:
+    Type: String
   StackName:
     Default: pcloud
     Type: String
-  RootStackName:
-    Description: 'The root stack name of cfn templates'
-    Type: String
-    Default: devops-pcloud-infra
   Env:
     Description: Environment type.
     Default: dev
@@ -30,7 +28,7 @@ Resources:
     DeletionPolicy: Retain
     Properties:
       AccessControl: Private
-      BucketName: !Sub '${StackName}-cfn-templates-${Env}'
+      BucketName: !Sub '${StackName}-${BucketName}-${Env}'
       BucketEncryption: 
         ServerSideEncryptionConfiguration: 
         - ServerSideEncryptionByDefault:
