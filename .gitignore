@@ -364,3 +364,4 @@ local
 
 
 tmp/*.yml
+dist/

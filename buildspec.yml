@@ -1,0 +1,79 @@
+# The post_build phase includes creating or updating a CloudFormation stack for
+# the CloudFront distribution, Cognito User Pool, and Lambda@Edge function. The
+# cloudfront-cognito-lambdaedge.yml file should contain the necessary
+# CloudFormation configuration for creating these resources. 
+#
+# The CloudFront distribution should be configured to use the S3 bucket hosting
+# the Docusaurus documentation as its origin, and the Lambda@Edge function
+# should be deployed in the Viewer Request event to handle authentication and
+# authorization. 
+#
+# You can refer to this [AWS Blog post](https://aws.amazon.com/blogs/networking-and-content-delivery/authorizationedge-how-to-use-lambdaedge-and-json-web-tokens-to-enhance-web-application-security/)
+# for more details on how to set up CloudFront, Cognito, and Lambda@Edge for
+# securing access to your documentation.
+
+version: 0.2
+
+
+env:
+  variables:
+    DOCS_S3_BUCKET: ""
+    DOCS_CDN_DISTRIBUTION_ID: ""
+    CUSTOM_USER_NAME: ""
+    CFN_S3_BUCKET: ""
+    API_STACK_NAME: ""
+    AUTH_STACK_NAME: ""
+    EMAIL: ""
+
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+      - echo "Installing Docusaurus..."
+      - cd docs
+      - npm install --omit=dev
+      - cd ..
+
+  pre_build:
+    commands:
+      - echo "Linting and running tests..."
+      - npm run lint
+      # - npm test # no tests in this repo yet... should add some!
+
+  build:
+    commands:
+      - echo "Building the Node.js API service..."
+      - rm -rf node_modules
+      - npm install --omit=dev
+      - npm install -g typescript
+      - npm i --save-dev @types/node
+      - npm run build --omit=dev
+      - echo "Creating deployment package..."
+      - mv node_modules dist/
+      - echo "Building the Docusaurus documentation..."
+      - cd docs
+      - npm run build --omit=dev
+      - cd ..
+
+
+  post_build:
+    commands:
+### API related 
+      - echo "Post-build steps..."
+      - aws cloudformation package --template-file devops/ind-api-cfn.yml --output-template-file tmp/api-pkg.yml --s3-bucket $CFN_S3_BUCKET --s3-prefix deployment-packages
+      - aws cloudformation deploy --template-file tmp/api-pkg.yml --stack-name $API_STACK_NAME --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND --parameter-overrides StackName=$API_STACK_NAME AuthStackName=$AUTH_STACK_NAME S3BUCKET=$CFN_S3_BUCKET Email=$EMAIL
+
+### Docs APP related 
+      - echo "Uploading Docusaurus documentation to S3..."
+      - aws s3 sync docs/build/ s3://$DOCS_S3_BUCKET/     
+      - echo "Invalidating CloudFront to traffic new code..."
+      - aws cloudfront create-invalidation --distribution-id $DOCS_CDN_DISTRIBUTION_ID --paths "/*"
+
+cache:
+  paths:
+    - node_modules/**/*
+    - docs/node_modules/**/*
