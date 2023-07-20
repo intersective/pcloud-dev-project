@@ -58,6 +58,10 @@ Resources:
       AuthorizationType: NONE
       MethodResponses:
         - StatusCode: "200"
+          ResponseParameters:
+            "method.response.header.Content-Type": true
+          ResponseModels:
+            "application/json": "Empty"
       Integration:
         IntegrationHttpMethod: POST
         Type: AWS
@@ -74,6 +78,10 @@ Resources:
       AuthorizationType: NONE
       MethodResponses:
         - StatusCode: "201"
+          ResponseParameters:
+            "method.response.header.Content-Type": true
+          ResponseModels:
+            "application/json": "Empty"
       Integration:
         IntegrationHttpMethod: POST
         Type: AWS
@@ -90,6 +98,10 @@ Resources:
       AuthorizationType: NONE
       MethodResponses:
         - StatusCode: "204"
+          ResponseParameters:
+            "method.response.header.Content-Type": true
+          ResponseModels:
+            "application/json": "Empty"
       Integration:
         IntegrationHttpMethod: POST
         Type: AWS
@@ -106,6 +118,10 @@ Resources:
       AuthorizationType: NONE
       MethodResponses:
         - StatusCode: "204"
+          ResponseParameters:
+            "method.response.header.Content-Type": true
+          ResponseModels:
+            "application/json": "Empty"
       Integration:
         IntegrationHttpMethod: POST
         Type: AWS
@@ -122,6 +138,10 @@ Resources:
       AuthorizationType: NONE
       MethodResponses:
         - StatusCode: "200"
+          ResponseParameters:
+            "method.response.header.Content-Type": true
+          ResponseModels:
+            "application/json": "Empty"
       Integration:
         IntegrationHttpMethod: POST
         Type: AWS
