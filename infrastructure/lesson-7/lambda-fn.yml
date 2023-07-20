@@ -36,7 +36,7 @@ Resources:
       Role: !Ref LambdaExecutionRoleArn
       Environment:
         Variables:
-          DYNAMODB_TABLE_NAME: !Ref TableName
+          DYNAMODB_TABLE_NAME: !Sub '${StackName}-${TableName}-${Env}'
 
   CreatePostFunction:
     Type: AWS::Lambda::Function
@@ -53,7 +53,7 @@ Resources:
       Role: !Ref LambdaExecutionRoleArn
       Environment:
         Variables:
-          DYNAMODB_TABLE_NAME: !Ref TableName
+          DYNAMODB_TABLE_NAME: !Sub '${StackName}-${TableName}-${Env}'
 
   UpdatePostFunction:
     Type: AWS::Lambda::Function
@@ -70,7 +70,7 @@ Resources:
       Role: !Ref LambdaExecutionRoleArn
       Environment:
         Variables:
-          DYNAMODB_TABLE_NAME: !Ref TableName
+          DYNAMODB_TABLE_NAME: !Sub '${StackName}-${TableName}-${Env}'
 
   DeletePostFunction:
     Type: AWS::Lambda::Function
@@ -87,7 +87,7 @@ Resources:
       Role: !Ref LambdaExecutionRoleArn
       Environment:
         Variables:
-          DYNAMODB_TABLE_NAME: !Ref TableName
+          DYNAMODB_TABLE_NAME: !Sub '${StackName}-${TableName}-${Env}'
 
   GetAllPostsFunction:
     Type: AWS::Lambda::Function
@@ -104,4 +104,4 @@ Resources:
       Role: !Ref LambdaExecutionRoleArn
       Environment:
         Variables:
-          DYNAMODB_TABLE_NAME: !Ref TableName
+          DYNAMODB_TABLE_NAME: !Sub '${StackName}-${TableName}-${Env}'
