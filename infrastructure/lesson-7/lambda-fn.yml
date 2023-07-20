@@ -25,7 +25,13 @@ Resources:
   GetPostFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: !Ref S3ObjectUrl
+      CodeUri:
+        Bucket:
+          !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
+        Key: !Join
+          - "/"
+          - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
+            - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.getPost
       Runtime: nodejs18.x
       Events:
@@ -46,7 +52,13 @@ Resources:
   CreatePostFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: !Ref S3ObjectUrl
+      CodeUri:
+        Bucket:
+          !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
+        Key: !Join
+          - "/"
+          - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
+            - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.createPost
       Runtime: nodejs18.x
       Events:
@@ -67,7 +79,13 @@ Resources:
   UpdatePostFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: !Ref S3ObjectUrl
+      CodeUri:
+        Bucket:
+          !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
+        Key: !Join
+          - "/"
+          - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
+            - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.updatePost
       Runtime: nodejs18.x
       Events:
@@ -88,7 +106,13 @@ Resources:
   DeletePostFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: !Ref S3ObjectUrl
+      CodeUri:
+        Bucket:
+          !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
+        Key: !Join
+          - "/"
+          - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
+            - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.deletePost
       Runtime: nodejs18.x
       Events:
@@ -109,7 +133,13 @@ Resources:
   GetAllPostsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: !Ref S3ObjectUrl
+      CodeUri:
+        Bucket:
+          !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
+        Key: !Join
+          - "/"
+          - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
+            - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.getAllPosts
       Runtime: nodejs18.x
       Events:
