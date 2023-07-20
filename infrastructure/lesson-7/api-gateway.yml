@@ -56,14 +56,14 @@ Resources:
       ResourceId: !Ref APIGatewayResource
       HttpMethod: GET
       AuthorizationType: NONE
-      MethodResponse:
-        StatusCode: 200
+      MethodResponses:
+        - StatusCode: "200"
       Integration:
         IntegrationHttpMethod: POST
         Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetPostFunctionArn}/invocations"
-        IntegrationResponse:
-          StatusCode: 200
+        IntegrationResponses:
+          - StatusCode: "200"
 
   CreatePostMethod:
     Type: AWS::ApiGateway::Method
@@ -72,14 +72,14 @@ Resources:
       ResourceId: !Ref APIGatewayResource
       HttpMethod: POST
       AuthorizationType: NONE
-      MethodResponse:
-        StatusCode: 201
+      MethodResponses:
+        - StatusCode: "201"
       Integration:
         IntegrationHttpMethod: POST
         Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreatePostFunctionArn}/invocations"
-        IntegrationResponse:
-          StatusCode: 201
+        IntegrationResponses:
+          - StatusCode: "201"
 
   UpdatePostMethod:
     Type: AWS::ApiGateway::Method
@@ -88,14 +88,14 @@ Resources:
       ResourceId: !Ref APIGatewayResource
       HttpMethod: PATCH
       AuthorizationType: NONE
-      MethodResponse:
-        StatusCode: 204
+      MethodResponses:
+        - StatusCode: "204"
       Integration:
         IntegrationHttpMethod: POST
         Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdatePostFunctionArn}/invocations"
-        IntegrationResponse:
-          StatusCode: 204
+        IntegrationResponses:
+          - StatusCode: "204"
 
   DeletePostMethod:
     Type: AWS::ApiGateway::Method
@@ -104,10 +104,14 @@ Resources:
       ResourceId: !Ref APIGatewayResource
       HttpMethod: DELETE
       AuthorizationType: NONE
+      MethodResponses:
+        - StatusCode: "204"
       Integration:
         IntegrationHttpMethod: POST
         Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeletePostFunctionArn}/invocations"
+        IntegrationResponses:
+          - StatusCode: "204"
 
   GetAllPostsMethod:
     Type: AWS::ApiGateway::Method
@@ -116,14 +120,14 @@ Resources:
       ResourceId: !Ref APIGatewayResourceAllPosts
       HttpMethod: GET
       AuthorizationType: NONE
-      MethodResponse:
-        StatusCode: 204
+      MethodResponses:
+        - StatusCode: "200"
       Integration:
         IntegrationHttpMethod: POST
         Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllPostsFunctionArn}/invocations"
-        IntegrationResponse:
-          StatusCode: 204
+        IntegrationResponses:
+          - StatusCode: "200"
 
   MyApiGatewayDeployment:
     DependsOn:
