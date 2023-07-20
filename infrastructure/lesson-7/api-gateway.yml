@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Description: Sample CloudFormation Template for API Gateway and Lambda Integration
 
 Parameters:
@@ -40,7 +40,7 @@ Resources:
     Properties:
       ParentId: !GetAtt APIGateWay.RootResourceId
       RestApiId: !Ref APIGateWay
-      PathPart: myresource
+      PathPart: post
 
   GetPostMethod:
     Type: AWS::ApiGateway::Method
@@ -103,11 +103,20 @@ Resources:
   #       Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllPostsFunctionArn}/invocations"
 
   MyApiGatewayDeployment:
+    DependsOn:
+      [
+        APIGatewayResource,
+        GetPostMethod,
+        CreatePostMethod,
+        UpdatePostMethod,
+        DeletePostMethod,
+      ]
     Type: AWS::ApiGateway::Deployment
     Properties:
       RestApiId: !Ref APIGateWay
 
   MyApiGatewayStage:
+    DependsOn: [MyApiGatewayDeployment]
     Type: AWS::ApiGateway::Stage
     Properties:
       StageName: prod
