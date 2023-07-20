@@ -63,7 +63,7 @@ Resources:
           ResponseModels:
             "application/json": "Empty"
       Integration:
-        IntegrationHttpMethod: POST
+        IntegrationHttpMethod: GET
         Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetPostFunctionArn}/invocations"
         IntegrationResponses:
@@ -74,7 +74,8 @@ Resources:
     Properties:
       FunctionName: !Ref GetPostFunctionArn
       Action: 'lambda:InvokeFunction'
-      Principal: apigateway.amazonaws.com
+      Principal: "apigateway.amazonaws.com"
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/GET/post'
 
   CreatePostMethod:
     Type: AWS::ApiGateway::Method
@@ -101,7 +102,8 @@ Resources:
     Properties:
       FunctionName: !Ref CreatePostFunctionArn
       Action: 'lambda:InvokeFunction'
-      Principal: apigateway.amazonaws.com
+      Principal: "apigateway.amazonaws.com"
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/POST/post'
 
   UpdatePostMethod:
     Type: AWS::ApiGateway::Method
@@ -117,7 +119,7 @@ Resources:
           ResponseModels:
             "application/json": "Empty"
       Integration:
-        IntegrationHttpMethod: POST
+        IntegrationHttpMethod: PATCH
         Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdatePostFunctionArn}/invocations"
         IntegrationResponses:
@@ -128,7 +130,8 @@ Resources:
     Properties:
       FunctionName: !Ref UpdatePostFunctionArn
       Action: 'lambda:InvokeFunction'
-      Principal: apigateway.amazonaws.com
+      Principal: "apigateway.amazonaws.com"
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/PATCH/post'
 
   DeletePostMethod:
     Type: AWS::ApiGateway::Method
@@ -144,7 +147,7 @@ Resources:
           ResponseModels:
             "application/json": "Empty"
       Integration:
-        IntegrationHttpMethod: POST
+        IntegrationHttpMethod: DELETE
         Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeletePostFunctionArn}/invocations"
         IntegrationResponses:
@@ -155,7 +158,8 @@ Resources:
     Properties:
       FunctionName: !Ref DeletePostFunctionArn
       Action: 'lambda:InvokeFunction'
-      Principal: apigateway.amazonaws.com
+      Principal: "apigateway.amazonaws.com"
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/DELETE/post'
 
   GetAllPostsMethod:
     Type: AWS::ApiGateway::Method
@@ -171,7 +175,7 @@ Resources:
           ResponseModels:
             "application/json": "Empty"
       Integration:
-        IntegrationHttpMethod: POST
+        IntegrationHttpMethod: GET
         Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllPostsFunctionArn}/invocations"
         IntegrationResponses:
@@ -182,7 +186,8 @@ Resources:
     Properties:
       FunctionName: !Ref GetAllPostsFunctionArn
       Action: 'lambda:InvokeFunction'
-      Principal: apigateway.amazonaws.com
+      Principal: "apigateway.amazonaws.com"
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/GET/posts'
 
   MyApiGatewayDeployment:
     DependsOn:
