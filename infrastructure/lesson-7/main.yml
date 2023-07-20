@@ -58,9 +58,6 @@ Resources:
     Properties:
       TemplateURL: ./api-gateway.yml
       Parameters:
-        StackName: !Ref StackName
-        Env: !Ref Env
-        ApiGatewayName: !Ref ApiGatewayName
         GetPostFunctionArn: !GetAtt LambdaFnStack.Outputs.GetPostFunctionArn
         CreatePostFunctionArn: !GetAtt LambdaFnStack.Outputs.CreatePostFunctionArn
         UpdatePostFunctionArn: !GetAtt LambdaFnStack.Outputs.UpdatePostFunctionArn

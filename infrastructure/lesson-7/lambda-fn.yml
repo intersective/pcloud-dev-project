@@ -29,89 +29,149 @@ Resources:
       StageName: pcloud-dev
 
   GetPostFunction:
-    Type: AWS::Lambda::Function
+    Type: AWS::Serverless::Function
     Properties:
-      Code:
-        S3Bucket:
+      CodeUri:
+        Bucket:
           !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
-        S3Key: !Join
+        Key: !Join
           - "/"
           - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
             - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.getPost
       Runtime: nodejs18.x
-      Role: !Ref LambdaExecutionRoleArn
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /post/{postId}
+            Method: GET
+            RestApiId:
+              Ref: APIGateWay
       Environment:
         Variables:
-          DYNAMODB_TABLE_NAME: !Sub '${StackName}-${TableName}-${Env}'
+          DYNAMODB_TABLE_NAME: !Sub "${StackName}-${TableName}-${Env}"
+      Policies:
+        ## Read more about SAM Policy templates at:
+        ## https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html
+        - DynamoDBReadPolicy:
+            TableName: !Sub "${StackName}-${TableName}-${Env}"
 
   CreatePostFunction:
-    Type: AWS::Lambda::Function
+    Type: AWS::Serverless::Function
     Properties:
-      Code:
-        S3Bucket:
+      CodeUri:
+        Bucket:
           !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
-        S3Key: !Join
+        Key: !Join
           - "/"
           - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
             - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.createPost
       Runtime: nodejs18.x
-      Role: !Ref LambdaExecutionRoleArn
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /post
+            Method: POST
+            RestApiId:
+              Ref: APIGateWay
       Environment:
         Variables:
-          DYNAMODB_TABLE_NAME: !Sub '${StackName}-${TableName}-${Env}'
+          DYNAMODB_TABLE_NAME: !Sub "${StackName}-${TableName}-${Env}"
+      Policies:
+        ## Read more about SAM Policy templates at:
+        ## https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html
+        - DynamoDBCrudPolicy:
+            TableName: !Sub "${StackName}-${TableName}-${Env}"
 
   UpdatePostFunction:
-    Type: AWS::Lambda::Function
+    Type: AWS::Serverless::Function
     Properties:
-      Code:
-        S3Bucket:
+      CodeUri:
+        Bucket:
           !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
-        S3Key: !Join
+        Key: !Join
           - "/"
           - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
             - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.updatePost
       Runtime: nodejs18.x
-      Role: !Ref LambdaExecutionRoleArn
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /post/{postId}
+            Method: PUT
+          RestApiId:
+            Ref: APIGateWay
       Environment:
         Variables:
-          DYNAMODB_TABLE_NAME: !Sub '${StackName}-${TableName}-${Env}'
+          DYNAMODB_TABLE_NAME: !Sub "${StackName}-${TableName}-${Env}"
+      Policies:
+        ## Read more about SAM Policy templates at:
+        ## https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html
+        - DynamoDBCrudPolicy:
+            TableName: !Sub "${StackName}-${TableName}-${Env}"
 
   DeletePostFunction:
-    Type: AWS::Lambda::Function
+    Type: AWS::Serverless::Function
     Properties:
-      Code:
-        S3Bucket:
+      CodeUri:
+        Bucket:
           !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
-        S3Key: !Join
+        Key: !Join
           - "/"
           - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
             - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.deletePost
       Runtime: nodejs18.x
-      Role: !Ref LambdaExecutionRoleArn
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /post/{postId}
+            Method: DELETE
+            RestApiId:
+              Ref: APIGateWay
       Environment:
         Variables:
-          DYNAMODB_TABLE_NAME: !Sub '${StackName}-${TableName}-${Env}'
+          DYNAMODB_TABLE_NAME: !Sub "${StackName}-${TableName}-${Env}"
+      Policies:
+        ## Read more about SAM Policy templates at:
+        ## https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html
+        - DynamoDBCrudPolicy:
+            TableName: !Sub "${StackName}-${TableName}-${Env}"
 
   GetAllPostsFunction:
-    Type: AWS::Lambda::Function
+    Type: AWS::Serverless::Function
     Properties:
-      Code:
-        S3Bucket:
+      CodeUri:
+        Bucket:
           !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
-        S3Key: !Join
+        Key: !Join
           - "/"
           - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
             - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.getAllPosts
       Runtime: nodejs18.x
-      Role: !Ref LambdaExecutionRoleArn
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /posts
+            Method: GET
+            RestApiId:
+              Ref: APIGateWay
       Environment:
         Variables:
-          DYNAMODB_TABLE_NAME: !Sub '${StackName}-${TableName}-${Env}'
+          DYNAMODB_TABLE_NAME: !Sub "${StackName}-${TableName}-${Env}"
+      Policies:
+        ## Read more about SAM Policy templates at:
+        ## https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html
+        - DynamoDBReadPolicy:
+            TableName: !Sub "${StackName}-${TableName}-${Env}"
 
 Outputs:
   GetPostFunctionArn:
