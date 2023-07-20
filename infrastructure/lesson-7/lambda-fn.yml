@@ -16,6 +16,9 @@ Parameters:
   LambdaExecutionRoleArn:
     Type: String
     Description: ARN of the IAM role to be attached to the Lambda function.
+  TableName:
+    Type: String
+    Description: Name of the DynamoDB Table
 
 Resources:
   GetPostFunction:
@@ -31,6 +34,9 @@ Resources:
       Handler: api.getPost
       Runtime: nodejs18.x
       Role: !Ref LambdaExecutionRoleArn
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: !Ref TableName
 
   CreatePostFunction:
     Type: AWS::Lambda::Function
@@ -45,6 +51,9 @@ Resources:
       Handler: api.createPost
       Runtime: nodejs18.x
       Role: !Ref LambdaExecutionRoleArn
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: !Ref TableName
 
   UpdatePostFunction:
     Type: AWS::Lambda::Function
@@ -59,6 +68,9 @@ Resources:
       Handler: api.updatePost
       Runtime: nodejs18.x
       Role: !Ref LambdaExecutionRoleArn
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: !Ref TableName
 
   DeletePostFunction:
     Type: AWS::Lambda::Function
@@ -73,6 +85,9 @@ Resources:
       Handler: api.deletePost
       Runtime: nodejs18.x
       Role: !Ref LambdaExecutionRoleArn
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: !Ref TableName
 
   GetAllPostsFunction:
     Type: AWS::Lambda::Function
@@ -87,3 +102,6 @@ Resources:
       Handler: api.getAllPosts
       Runtime: nodejs18.x
       Role: !Ref LambdaExecutionRoleArn
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: !Ref TableName
