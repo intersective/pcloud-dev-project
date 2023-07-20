@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: CloudFormation template for Lambda functions
 
@@ -22,6 +22,12 @@ Parameters:
     Description: Name of the DynamoDB Table
 
 Resources:
+  APIGateWay:
+    Type: AWS::Serverless::Api
+    Properties:
+      OpenApiVersion: 3.0.1
+      StageName: pcloud-dev
+
   GetPostFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -35,11 +41,13 @@ Resources:
       Handler: api.getPost
       Runtime: nodejs18.x
       Events:
-        ApiGateway:
+        ApiEvent:
           Type: Api
           Properties:
-            Path: post/{postId}
+            Path: /post/{postId}
             Method: GET
+            RestApiId:
+              Ref: APIGateWay
       Environment:
         Variables:
           DYNAMODB_TABLE_NAME: !Sub "${StackName}-${TableName}-${Env}"
@@ -62,11 +70,13 @@ Resources:
       Handler: api.createPost
       Runtime: nodejs18.x
       Events:
-        ApiGateway:
+        ApiEvent:
           Type: Api
           Properties:
-            Path: post
+            Path: /post
             Method: POST
+            RestApiId:
+              Ref: APIGateWay
       Environment:
         Variables:
           DYNAMODB_TABLE_NAME: !Sub "${StackName}-${TableName}-${Env}"
@@ -89,11 +99,13 @@ Resources:
       Handler: api.updatePost
       Runtime: nodejs18.x
       Events:
-        ApiGateway:
+        ApiEvent:
           Type: Api
           Properties:
-            Path: post/{postId}
+            Path: /post/{postId}
             Method: PUT
+          RestApiId:
+            Ref: APIGateWay
       Environment:
         Variables:
           DYNAMODB_TABLE_NAME: !Sub "${StackName}-${TableName}-${Env}"
@@ -116,11 +128,13 @@ Resources:
       Handler: api.deletePost
       Runtime: nodejs18.x
       Events:
-        ApiGateway:
+        ApiEvent:
           Type: Api
           Properties:
-            Path: post/{postId}
+            Path: /post/{postId}
             Method: DELETE
+            RestApiId:
+              Ref: APIGateWay
       Environment:
         Variables:
           DYNAMODB_TABLE_NAME: !Sub "${StackName}-${TableName}-${Env}"
@@ -143,11 +157,13 @@ Resources:
       Handler: api.getAllPosts
       Runtime: nodejs18.x
       Events:
-        ApiGateway:
+        ApiEvent:
           Type: Api
           Properties:
-            Path: posts
+            Path: /posts
             Method: GET
+            RestApiId:
+              Ref: APIGateWay
       Environment:
         Variables:
           DYNAMODB_TABLE_NAME: !Sub "${StackName}-${TableName}-${Env}"
