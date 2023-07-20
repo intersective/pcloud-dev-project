@@ -13,6 +13,10 @@ Parameters:
     Default: dev
     Type: String
     ConstraintDescription: must specify dev,test,live.
+  LambdaExecutionRoleArn:
+    Type: String
+    Description: ARN of the IAM role to be attached to the Lambda function.
+
 
 Resources:
   GetPostFunction:
@@ -23,6 +27,7 @@ Resources:
         S3Key: !Sub "${S3ObjectUrl.split('/')[3]}"
       Handler: api.getPost
       Runtime: nodejs18.x
+      Role: !Ref LambdaExecutionRoleArn
 
   CreatePostFunction:
     Type: AWS::Lambda::Function
@@ -32,6 +37,7 @@ Resources:
         S3Key: !Sub "${S3ObjectUrl.split('/')[3]}"
       Handler: api.createPost
       Runtime: nodejs18.x
+      Role: !Ref LambdaExecutionRoleArn
 
   UpdatePostFunction:
     Type: AWS::Lambda::Function
@@ -41,6 +47,7 @@ Resources:
         S3Key: !Sub "${S3ObjectUrl.split('/')[3]}"
       Handler: api.updatePost
       Runtime: nodejs18.x
+      Role: !Ref LambdaExecutionRoleArn
 
   DeletePostFunction:
     Type: AWS::Lambda::Function
@@ -50,6 +57,7 @@ Resources:
         S3Key: !Sub "${S3ObjectUrl.split('/')[3]}"
       Handler: api.deletePost
       Runtime: nodejs18.x
+      Role: !Ref LambdaExecutionRoleArn
 
   GetAllPostsFunction:
     Type: AWS::Lambda::Function
@@ -59,3 +67,4 @@ Resources:
         S3Key: !Sub "${S3ObjectUrl.split('/')[3]}"
       Handler: api.getAllPosts
       Runtime: nodejs18.x
+      Role: !Ref LambdaExecutionRoleArn

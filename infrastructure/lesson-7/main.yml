@@ -36,3 +36,4 @@ Resources:
         S3ObjectUrl: !Ref S3ObjectUrl
         StackName: !Ref StackName
         Env: !Ref Env
+        LambdaExecutionRoleArn: !GetAtt IAMRoleStack.Outputs.LambdaExecutionRoleArn
