@@ -55,11 +55,11 @@ Resources:
         StackName: !Ref StackName
         Env: !Ref Env
 
-  APIGatwayStack:
+  APIGatewayStack:
     DependsOn: [LambdaFnStack]
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: ./lambda-fn.yml
+      TemplateURL: ./api-gateway.yml
       Parameters:
         StackName: !Ref StackName
         Env: !Ref Env
