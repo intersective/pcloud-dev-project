@@ -32,6 +32,7 @@ Resources:
         Env: !Ref Env
 
   LambdaFnStack:
+    DependsOn: [IAMRoleStack]
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: ./lambda-fn.yml
