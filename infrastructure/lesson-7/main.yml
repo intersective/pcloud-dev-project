@@ -40,6 +40,7 @@ Resources:
         StackName: !Ref StackName
         Env: !Ref Env
         LambdaExecutionRoleArn: !GetAtt IAMRoleStack.Outputs.LambdaExecutionRoleArn
+        TableName: !Ref TableName
   
   DynamoDbStack:
     Type: AWS::CloudFormation::Stack
