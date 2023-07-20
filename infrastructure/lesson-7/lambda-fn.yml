@@ -40,6 +40,7 @@ Resources:
             - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.getPost
       Runtime: nodejs18.x
+      Role: !Ref LambdaExecutionRoleArn
       Events:
         ApiEvent:
           Type: Api
@@ -69,6 +70,7 @@ Resources:
             - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.createPost
       Runtime: nodejs18.x
+      Role: !Ref LambdaExecutionRoleArn
       Events:
         ApiEvent:
           Type: Api
@@ -98,14 +100,15 @@ Resources:
             - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.updatePost
       Runtime: nodejs18.x
+      Role: !Ref LambdaExecutionRoleArn
       Events:
         ApiEvent:
           Type: Api
           Properties:
             Path: /post/{postId}
             Method: PUT
-          RestApiId:
-            Ref: APIGateWay
+            RestApiId:
+              Ref: APIGateWay
       Environment:
         Variables:
           DYNAMODB_TABLE_NAME: !Sub "${StackName}-${TableName}-${Env}"
@@ -127,6 +130,7 @@ Resources:
             - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.deletePost
       Runtime: nodejs18.x
+      Role: !Ref LambdaExecutionRoleArn
       Events:
         ApiEvent:
           Type: Api
@@ -156,6 +160,7 @@ Resources:
             - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.getAllPosts
       Runtime: nodejs18.x
+      Role: !Ref LambdaExecutionRoleArn
       Events:
         ApiEvent:
           Type: Api
