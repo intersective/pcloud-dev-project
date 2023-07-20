@@ -16,6 +16,9 @@ Parameters:
   S3ObjectUrl:
     Type: String
     Description: HTTPS URL of the .zip file containing the GetPost function code.
+  TableName:
+    Type: String
+    Description: Name of the DynamoDB Table
 
 Resources:
 
@@ -37,3 +40,12 @@ Resources:
         StackName: !Ref StackName
         Env: !Ref Env
         LambdaExecutionRoleArn: !GetAtt IAMRoleStack.Outputs.LambdaExecutionRoleArn
+  
+  DynamoDbStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./dynamodb.yml
+      Parameters:
+        TableName: !Ref TableName
+        StackName: !Ref StackName
+        Env: !Ref Env
