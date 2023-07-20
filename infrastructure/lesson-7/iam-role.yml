@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Description: CloudFormation template for Lambda use case IAM role with DynamoDB access
 
 Parameters:
@@ -21,26 +21,15 @@ Resources:
     Properties:
       RoleName: !Sub '${StackName}-${LambdaFunctionName}-${Env}'
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
               Service: lambda.amazonaws.com
             Action: sts:AssumeRole
-      Policies:
-        - PolicyName: LambdaDynamoDBFullAccess
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - lambda:InvokeFunction
-                  - lambda:GetFunction
-                Resource: "*"
-              - Effect: Allow
-                Action:
-                  - dynamodb:*
-                Resource: "*"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AWSLambdaExecute" 
+        - "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
 
 Outputs:
   LambdaExecutionRoleArn:
