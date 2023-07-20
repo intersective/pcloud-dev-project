@@ -26,8 +26,8 @@ Resources:
           !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
         S3Key: !Join
           - "/"
-          - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
-          - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
+          - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
+            - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.getPost
       Runtime: nodejs18.x
       Role: !Ref LambdaExecutionRoleArn
@@ -40,8 +40,8 @@ Resources:
           !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
         S3Key: !Join
           - "/"
-          - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
-          - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
+          - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
+            - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.createPost
       Runtime: nodejs18.x
       Role: !Ref LambdaExecutionRoleArn
@@ -54,8 +54,8 @@ Resources:
           !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
         S3Key: !Join
           - "/"
-          - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
-          - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
+          - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
+            - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.updatePost
       Runtime: nodejs18.x
       Role: !Ref LambdaExecutionRoleArn
@@ -68,8 +68,8 @@ Resources:
           !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
         S3Key: !Join
           - "/"
-          - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
-          - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
+          - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
+            - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.deletePost
       Runtime: nodejs18.x
       Role: !Ref LambdaExecutionRoleArn
@@ -82,8 +82,8 @@ Resources:
           !Select [0, !Split [".", !Select [2, !Split ["/", !Ref S3ObjectUrl]]]]
         S3Key: !Join
           - "/"
-          - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
-          - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
+          - - !Select [3, !Split ["/", !Ref S3ObjectUrl]]
+            - !Select [4, !Split ["/", !Ref S3ObjectUrl]]
       Handler: api.getAllPosts
       Runtime: nodejs18.x
       Role: !Ref LambdaExecutionRoleArn
