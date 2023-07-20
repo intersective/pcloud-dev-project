@@ -13,6 +13,9 @@ Parameters:
     Default: dev
     Type: String
     ConstraintDescription: must specify dev,test,live.
+  S3ObjectUrl:
+    Type: String
+    Description: HTTPS URL of the .zip file containing the GetPost function code.
 
 Resources:
 
@@ -22,5 +25,14 @@ Resources:
       TemplateURL: ./iam-role.yml
       Parameters:
         LambdaFunctionName: !Ref LambdaFunctionName
+        StackName: !Ref StackName
+        Env: !Ref Env
+
+  LambdaFnStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./lambda-fn.yml
+      Parameters:
+        S3ObjectUrl: !Ref S3ObjectUrl
         StackName: !Ref StackName
         Env: !Ref Env

@@ -1,0 +1,61 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CloudFormation template for Lambda functions
+
+Parameters:
+  S3ObjectUrl:
+    Type: String
+    Description: HTTPS URL of the .zip file containing the GetPost function code.
+  StackName:
+    Default: pcloud
+    Type: String
+  Env:
+    Description: Environment type.
+    Default: dev
+    Type: String
+    ConstraintDescription: must specify dev,test,live.
+
+Resources:
+  GetPostFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: !Sub "${S3ObjectUrl.split('/')[2]}"
+        S3Key: !Sub "${S3ObjectUrl.split('/')[3]}"
+      Handler: api.getPost
+      Runtime: nodejs18.x
+
+  CreatePostFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: !Sub "${S3ObjectUrl.split('/')[2]}"
+        S3Key: !Sub "${S3ObjectUrl.split('/')[3]}"
+      Handler: api.createPost
+      Runtime: nodejs18.x
+
+  UpdatePostFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: !Sub "${S3ObjectUrl.split('/')[2]}"
+        S3Key: !Sub "${S3ObjectUrl.split('/')[3]}"
+      Handler: api.updatePost
+      Runtime: nodejs18.x
+
+  DeletePostFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: !Sub "${S3ObjectUrl.split('/')[2]}"
+        S3Key: !Sub "${S3ObjectUrl.split('/')[3]}"
+      Handler: api.deletePost
+      Runtime: nodejs18.x
+
+  GetAllPostsFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: !Sub "${S3ObjectUrl.split('/')[2]}"
+        S3Key: !Sub "${S3ObjectUrl.split('/')[3]}"
+      Handler: api.getAllPosts
+      Runtime: nodejs18.x
