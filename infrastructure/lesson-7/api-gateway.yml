@@ -56,10 +56,18 @@ Resources:
       ResourceId: !Ref APIGatewayResource
       HttpMethod: GET
       AuthorizationType: NONE
+      MethodResponses:
+        - StatusCode: "200"
+          ResponseParameters:
+            "method.response.header.Content-Type": true
+          ResponseModels:
+            "application/json": "Empty"
       Integration:
         IntegrationHttpMethod: GET
-        Type: AWS_PROXY
+        Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetPostFunctionArn}/invocations"
+        IntegrationResponses:
+          - StatusCode: "200"
 
   GetPostPermission:
     Type: 'AWS::Lambda::Permission'
@@ -76,10 +84,18 @@ Resources:
       ResourceId: !Ref APIGatewayResource
       HttpMethod: POST
       AuthorizationType: NONE
+      MethodResponses:
+        - StatusCode: "201"
+          ResponseParameters:
+            "method.response.header.Content-Type": true
+          ResponseModels:
+            "application/json": "Empty"
       Integration:
         IntegrationHttpMethod: POST
-        Type: AWS_PROXY
+        Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreatePostFunctionArn}/invocations"
+        IntegrationResponses:
+          - StatusCode: "201"
 
   CreatePostPermission:
     Type: 'AWS::Lambda::Permission'
@@ -96,10 +112,18 @@ Resources:
       ResourceId: !Ref APIGatewayResource
       HttpMethod: PATCH
       AuthorizationType: NONE
+      MethodResponses:
+        - StatusCode: "204"
+          ResponseParameters:
+            "method.response.header.Content-Type": true
+          ResponseModels:
+            "application/json": "Empty"
       Integration:
         IntegrationHttpMethod: PATCH
-        Type: AWS_PROXY
+        Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdatePostFunctionArn}/invocations"
+        IntegrationResponses:
+          - StatusCode: "204"
   
   UpdatePostPermission:
     Type: 'AWS::Lambda::Permission'
@@ -116,10 +140,18 @@ Resources:
       ResourceId: !Ref APIGatewayResource
       HttpMethod: DELETE
       AuthorizationType: NONE
+      MethodResponses:
+        - StatusCode: "204"
+          ResponseParameters:
+            "method.response.header.Content-Type": true
+          ResponseModels:
+            "application/json": "Empty"
       Integration:
         IntegrationHttpMethod: DELETE
-        Type: AWS_PROXY
+        Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeletePostFunctionArn}/invocations"
+        IntegrationResponses:
+          - StatusCode: "204"
 
   DeletePostPermission:
     Type: 'AWS::Lambda::Permission'
@@ -136,10 +168,18 @@ Resources:
       ResourceId: !Ref APIGatewayResourceAllPosts
       HttpMethod: GET
       AuthorizationType: NONE
+      MethodResponses:
+        - StatusCode: "200"
+          ResponseParameters:
+            "method.response.header.Content-Type": true
+          ResponseModels:
+            "application/json": "Empty"
       Integration:
         IntegrationHttpMethod: GET
-        Type: AWS_PROXY
+        Type: AWS
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllPostsFunctionArn}/invocations"
+        IntegrationResponses:
+          - StatusCode: "200"
 
   GetAllPostsPermission:
     Type: 'AWS::Lambda::Permission'
