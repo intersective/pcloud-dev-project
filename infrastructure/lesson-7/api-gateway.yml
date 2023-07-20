@@ -1,0 +1,120 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Sample CloudFormation Template for API Gateway and Lambda Integration
+
+Parameters:
+  ApiGatewayName:
+    Type: String
+    Description: Name of the APIGateWay
+  StackName:
+    Default: pcloud
+    Type: String
+  Env:
+    Description: Environment type.
+    Default: dev
+    Type: String
+    ConstraintDescription: must specify dev,test,live.
+  GetPostFunctionArn:
+    Type: String
+    Description: ARN of the Lambda Function GetPostFunction
+  CreatePostFunctionArn:
+    Type: String
+    Description: ARN of the Lambda Function CreatePostFunction
+  UpdatePostFunctionArn:
+    Type: String
+    Description: ARN of the Lambda Function UpdatePostFunction
+  DeletePostFunctionArn:
+    Type: String
+    Description: ARN of the Lambda Function DeletePostFunction
+  GetAllPostsFunctionArn:
+    Type: String
+    Description: ARN of the Lambda Function GetAllPostsFunction
+
+Resources:
+  APIGateWay:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: !Ref ApiGatewayName
+
+  APIGatewayResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt APIGateWay.RootResourceId
+      RestApiId: !Ref APIGateWay
+      PathPart: myresource
+
+  GetPostMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGateWay
+      ResourceId: !Ref APIGatewayResource
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetPostFunctionArn}/invocations"
+
+  CreatePostMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGateWay
+      ResourceId: !Ref APIGatewayResource
+      HttpMethod: POST
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreatePostFunctionArn}/invocations"
+
+  UpdatePostMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGateWay
+      ResourceId: !Ref APIGatewayResource
+      HttpMethod: PATCH
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdatePostFunctionArn}/invocations"
+
+  DeletePostMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGateWay
+      ResourceId: !Ref APIGatewayResource
+      HttpMethod: DELETE
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeletePostFunctionArn}/invocations"
+
+  GetAllPostsMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGateWay
+      ResourceId: !Ref APIGatewayResource
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllPostsFunctionArn}/invocations"
+
+  MyApiGatewayDeployment:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      RestApiId: !Ref APIGateWay
+
+  MyApiGatewayStage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      StageName: prod
+      RestApiId: !Ref APIGateWay
+      DeploymentId: !Ref MyApiGatewayDeployment
+
+Outputs:
+  ApiEndpoint:
+    Value: !Sub "https://${APIGateWay}.execute-api.${AWS::Region}.amazonaws.com/prod"
+    Description: URL of the deployed API endpoint

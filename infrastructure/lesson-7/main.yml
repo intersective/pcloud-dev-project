@@ -19,6 +19,9 @@ Parameters:
   TableName:
     Type: String
     Description: Name of the DynamoDB Table
+  ApiGatewayName:
+    Type: String
+    Description: Name of the APIGateWay
 
 Resources:
 
@@ -51,3 +54,19 @@ Resources:
         TableName: !Ref TableName
         StackName: !Ref StackName
         Env: !Ref Env
+
+  APIGatwayStack:
+    DependsOn: [LambdaFnStack]
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./lambda-fn.yml
+      Parameters:
+        StackName: !Ref StackName
+        Env: !Ref Env
+        ApiGatewayName: !Ref ApiGatewayName
+        GetPostFunctionArn: !GetAtt LambdaFnStack.Outputs.GetPostFunctionArn
+        CreatePostFunctionArn: !GetAtt LambdaFnStack.Outputs.CreatePostFunctionArn
+        UpdatePostFunctionArn: !GetAtt LambdaFnStack.Outputs.UpdatePostFunctionArn
+        DeletePostFunctionArn: !GetAtt LambdaFnStack.Outputs.DeletePostFunctionArn
+        GetAllPostsFunctionArn: !GetAtt LambdaFnStack.Outputs.GetAllPostsFunctionArn
+

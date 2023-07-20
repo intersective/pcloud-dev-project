@@ -105,3 +105,20 @@ Resources:
       Environment:
         Variables:
           DYNAMODB_TABLE_NAME: !Sub '${StackName}-${TableName}-${Env}'
+
+Outputs:
+  GetPostFunctionArn:
+    Value: !GetAtt GetPostFunction.Arn
+    Description: Arn for Lambda Function GetPostFunction
+  CreatePostFunctionArn:
+    Value: !GetAtt CreatePostFunction.Arn
+    Description: Arn for Lambda Function CreatePostFunction
+  UpdatePostFunctionArn:
+    Value: !GetAtt UpdatePostFunction.Arn
+    Description: Arn for Lambda Function UpdatePostFunction
+  DeletePostFunctionArn:
+    Value: !GetAtt DeletePostFunction.Arn
+    Description: Arn for Lambda Function DeletePostFunction
+  GetAllPostsFunctionArn:
+    Value: !GetAtt GetAllPostsFunction.Arn
+    Description: Arn for Lambda Function GetAllPostsFunction
