@@ -104,8 +104,8 @@ Resources:
           Properties:
             Path: /post/{postId}
             Method: PUT
-          RestApiId:
-            Ref: APIGateWay
+            RestApiId:
+              Ref: APIGateWay
       Environment:
         Variables:
           DYNAMODB_TABLE_NAME: !Sub "${StackName}-${TableName}-${Env}"
