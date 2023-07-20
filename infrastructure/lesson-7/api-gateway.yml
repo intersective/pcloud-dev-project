@@ -90,17 +90,17 @@ Resources:
         Type: AWS_PROXY
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeletePostFunctionArn}/invocations"
 
-  GetAllPostsMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      RestApiId: !Ref APIGateWay
-      ResourceId: !Ref APIGatewayResource
-      HttpMethod: GET
-      AuthorizationType: NONE
-      Integration:
-        IntegrationHttpMethod: POST
-        Type: AWS_PROXY
-        Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllPostsFunctionArn}/invocations"
+  # GetAllPostsMethod:
+  #   Type: AWS::ApiGateway::Method
+  #   Properties:
+  #     RestApiId: !Ref APIGateWay
+  #     ResourceId: !Ref APIGatewayResource
+  #     HttpMethod: GET
+  #     AuthorizationType: NONE
+  #     Integration:
+  #       IntegrationHttpMethod: POST
+  #       Type: AWS_PROXY
+  #       Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllPostsFunctionArn}/invocations"
 
   MyApiGatewayDeployment:
     Type: AWS::ApiGateway::Deployment
