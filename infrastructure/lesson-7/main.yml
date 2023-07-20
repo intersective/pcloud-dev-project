@@ -19,7 +19,7 @@ Resources:
   IAMRoleStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: ./infrastructure/lesson-7/iam-role.yml
+      TemplateURL: ./iam-role.yml
       Parameters:
         LambdaFunctionName: !Ref LambdaFunctionName
         StackName: !Ref StackName
