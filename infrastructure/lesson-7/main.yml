@@ -19,6 +19,9 @@ Parameters:
   TableName:
     Type: String
     Description: Name of the DynamoDB Table
+  ApiGatewayName:
+    Type: String
+    Description: Name of the APIGateWay
 
 Resources:
 

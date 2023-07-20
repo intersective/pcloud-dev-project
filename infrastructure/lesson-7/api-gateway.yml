@@ -62,12 +62,12 @@ Resources:
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetPostFunctionArn}/invocations"
 
   GetPostPermission:
-    Type: 'AWS::Lambda::Permission'
+    Type: "AWS::Lambda::Permission"
     Properties:
       FunctionName: !Ref GetPostFunctionArn
-      Action: 'lambda:InvokeFunction'
+      Action: "lambda:InvokeFunction"
       Principal: "apigateway.amazonaws.com"
-      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/GET/post'
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/GET/post"
 
   CreatePostMethod:
     Type: AWS::ApiGateway::Method
@@ -82,12 +82,12 @@ Resources:
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreatePostFunctionArn}/invocations"
 
   CreatePostPermission:
-    Type: 'AWS::Lambda::Permission'
+    Type: "AWS::Lambda::Permission"
     Properties:
       FunctionName: !Ref CreatePostFunctionArn
-      Action: 'lambda:InvokeFunction'
+      Action: "lambda:InvokeFunction"
       Principal: "apigateway.amazonaws.com"
-      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/POST/post'
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/POST/post"
 
   UpdatePostMethod:
     Type: AWS::ApiGateway::Method
@@ -100,14 +100,14 @@ Resources:
         IntegrationHttpMethod: PATCH
         Type: AWS_PROXY
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdatePostFunctionArn}/invocations"
-  
+
   UpdatePostPermission:
-    Type: 'AWS::Lambda::Permission'
+    Type: "AWS::Lambda::Permission"
     Properties:
       FunctionName: !Ref UpdatePostFunctionArn
-      Action: 'lambda:InvokeFunction'
+      Action: "lambda:InvokeFunction"
       Principal: "apigateway.amazonaws.com"
-      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/PATCH/post'
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/PATCH/post"
 
   DeletePostMethod:
     Type: AWS::ApiGateway::Method
@@ -122,12 +122,12 @@ Resources:
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeletePostFunctionArn}/invocations"
 
   DeletePostPermission:
-    Type: 'AWS::Lambda::Permission'
+    Type: "AWS::Lambda::Permission"
     Properties:
       FunctionName: !Ref DeletePostFunctionArn
-      Action: 'lambda:InvokeFunction'
+      Action: "lambda:InvokeFunction"
       Principal: "apigateway.amazonaws.com"
-      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/DELETE/post'
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/DELETE/post"
 
   GetAllPostsMethod:
     Type: AWS::ApiGateway::Method
@@ -142,12 +142,12 @@ Resources:
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllPostsFunctionArn}/invocations"
 
   GetAllPostsPermission:
-    Type: 'AWS::Lambda::Permission'
+    Type: "AWS::Lambda::Permission"
     Properties:
       FunctionName: !Ref GetAllPostsFunctionArn
-      Action: 'lambda:InvokeFunction'
+      Action: "lambda:InvokeFunction"
       Principal: "apigateway.amazonaws.com"
-      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/GET/posts'
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateWay}/*/GET/posts"
 
   MyApiGatewayDeployment:
     DependsOn:
