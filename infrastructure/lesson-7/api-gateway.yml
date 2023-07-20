@@ -69,6 +69,13 @@ Resources:
         IntegrationResponses:
           - StatusCode: "200"
 
+  GetPostPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !Ref GetPostFunctionArn
+      Action: 'lambda:InvokeFunction'
+      Principal: apigateway.amazonaws.com
+
   CreatePostMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -89,6 +96,13 @@ Resources:
         IntegrationResponses:
           - StatusCode: "201"
 
+  CreatePostPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !Ref CreatePostFunctionArn
+      Action: 'lambda:InvokeFunction'
+      Principal: apigateway.amazonaws.com
+
   UpdatePostMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -108,6 +122,13 @@ Resources:
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdatePostFunctionArn}/invocations"
         IntegrationResponses:
           - StatusCode: "204"
+  
+  UpdatePostPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !Ref UpdatePostFunctionArn
+      Action: 'lambda:InvokeFunction'
+      Principal: apigateway.amazonaws.com
 
   DeletePostMethod:
     Type: AWS::ApiGateway::Method
@@ -129,6 +150,13 @@ Resources:
         IntegrationResponses:
           - StatusCode: "204"
 
+  DeletePostPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !Ref DeletePostFunctionArn
+      Action: 'lambda:InvokeFunction'
+      Principal: apigateway.amazonaws.com
+
   GetAllPostsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -148,6 +176,13 @@ Resources:
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllPostsFunctionArn}/invocations"
         IntegrationResponses:
           - StatusCode: "200"
+
+  GetAllPostsPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !Ref GetAllPostsFunctionArn
+      Action: 'lambda:InvokeFunction'
+      Principal: apigateway.amazonaws.com
 
   MyApiGatewayDeployment:
     DependsOn:
