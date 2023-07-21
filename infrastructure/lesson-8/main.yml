@@ -20,6 +20,7 @@ Parameters:
 Resources:
 
   BucketPolicyStack:
+    DependsOn: [CloudFrontStack]
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: ./bucket-policy.yml
@@ -27,7 +28,8 @@ Resources:
         BucketName: !Ref BucketName
         StackName: !Ref StackName
         Env: !Ref Env
-  
+        DocsCloudFrontOaiS3CanonUserId: !GetAtt CloudFrontStack.Outputs.DocsCloudFrontOaiS3CanonUserId
+
   CloudFrontStack:
     Type: AWS::CloudFormation::Stack
     Properties:

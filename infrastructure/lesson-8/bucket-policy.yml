@@ -13,7 +13,10 @@ Parameters:
     Default: dev
     Type: String
     ConstraintDescription: must specify dev,test,live.
-
+  DocsCloudFrontOaiS3CanonUserId:
+    Description: DocsCloudFrontOriginAccessIdentity S3CanonicalUserId.
+    Type: String
+    
 Resources:
   DocsBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -26,7 +29,7 @@ Resources:
             Effect: Allow
             Resource: !Sub "arn:aws:s3:::${BucketName}/*"
             Principal:
-              CanonicalUser: !GetAtt DocsCloudFrontOriginAccessIdentity.S3CanonicalUserId
+              CanonicalUser: !Ref DocsCloudFrontOaiS3CanonUserId
           - Sid: AllowSSLRequestsOnly
             Effect: Deny
             Principal: "*"

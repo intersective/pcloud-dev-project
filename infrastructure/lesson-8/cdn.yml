@@ -78,3 +78,10 @@ Resources:
             IncludeSubdomains: true
             Override: true
             Preload: true
+
+Outputs:
+  DocsCloudFrontOaiS3CanonUserId:
+    Description: For reference S3 Bucket
+    Value: !GetAtt DocsCloudFrontOriginAccessIdentity.S3CanonicalUserId
+    Export:
+      Name: !Sub '${StackName}-DocsCloudFrontOaiS3CanonUserId-${Env}'
