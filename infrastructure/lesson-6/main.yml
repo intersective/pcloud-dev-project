@@ -25,7 +25,7 @@ Resources:
 
   S3MainBucket:
     Type: "AWS::S3::Bucket"
-    DeletionPolicy: Retain
+    DeletionPolicy: Delete
     Properties:
       AccessControl: Private
       BucketName: !Sub '${StackName}-${BucketName}-${Env}'
