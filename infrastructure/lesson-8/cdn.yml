@@ -30,6 +30,7 @@ Resources:
         Origins:
           - DomainName: !Ref S3BucketRegionalDomainName
             Id: !Sub "${StackName}-docs-${Env}"
+            OriginPath: "/doc"
             S3OriginConfig:
               OriginAccessIdentity:
                 Fn::Join:
