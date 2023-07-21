@@ -182,15 +182,25 @@ Outputs:
   GetPostFunctionArn:
     Value: !GetAtt GetPostFunction.Arn
     Description: Arn for Lambda Function GetPostFunction
+    Export:
+      Name: !Sub '${StackName}-GetPostFunctionArn-${Env}'
   CreatePostFunctionArn:
     Value: !GetAtt CreatePostFunction.Arn
     Description: Arn for Lambda Function CreatePostFunction
+    Export:
+      Name: !Sub '${StackName}-CreatePostFunctionArn-${Env}'
   UpdatePostFunctionArn:
     Value: !GetAtt UpdatePostFunction.Arn
     Description: Arn for Lambda Function UpdatePostFunction
+    Export:
+      Name: !Sub '${StackName}-UpdatePostFunctionArn-${Env}'
   DeletePostFunctionArn:
     Value: !GetAtt DeletePostFunction.Arn
     Description: Arn for Lambda Function DeletePostFunction
+    Export:
+      Name: !Sub '${StackName}-DeletePostFunctionArn-${Env}'
   GetAllPostsFunctionArn:
     Value: !GetAtt GetAllPostsFunction.Arn
     Description: Arn for Lambda Function GetAllPostsFunction
+    Export:
+      Name: !Sub '${StackName}-GetAllPostsFunctionArn-${Env}'

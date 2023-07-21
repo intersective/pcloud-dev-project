@@ -52,6 +52,10 @@ Outputs:
   S3MainBucketRef:
     Description: For reference S3 Bucket
     Value: !Ref S3MainBucket
+    Export:
+      Name: !Sub '${StackName}-S3MainBucketRef-${Env}'
   S3MainBucketRegionalDomainName:
     Description: For reference S3 Bucket
     Value: !GetAtt S3MainBucket.RegionalDomainName
+    Export:
+      Name: !Sub '${StackName}-S3MainBucketRegionalDomainName-${Env}'
