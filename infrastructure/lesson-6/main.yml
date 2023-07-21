@@ -47,3 +47,11 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
+
+Outputs:
+  S3MainBucketRef:
+    Description: For reference S3 Bucket
+    Value: !Ref S3MainBucket
+  S3MainBucketRegionalDomainName:
+    Description: For reference S3 Bucket
+    Value: !GetAtt S3MainBucket.RegionalDomainName
