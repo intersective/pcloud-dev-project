@@ -150,7 +150,7 @@ Resources:
         CustomErrorResponses:
           - ErrorCode: 404
             ResponseCode: 200
-            ResponsePagePath: /404.html
+            ResponsePagePath: /doc/404.html
           # - ErrorCode: 403
           #   ResponseCode: 200
           #   ResponsePagePath: /index.html
@@ -166,6 +166,7 @@ Resources:
           # - DomainName: example.org # Dummy origin is used for Lambda@Edge functions, keep this as-is
           - DomainName: { "Fn::ImportValue": !Sub "${StackName}-S3MainBucketRegionalDomainName-${Env}" }
             Id: dummy-origin
+            OriginPath: "/doc"
             CustomOriginConfig:
               OriginProtocolPolicy: match-viewer
         PriceClass: "PriceClass_All"
