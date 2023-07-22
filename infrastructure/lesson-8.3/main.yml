@@ -162,11 +162,14 @@ Resources:
             Id: !Sub "${StackName}-${AppStackPostfix}"
             OriginPath: "/doc"
             S3OriginConfig:
-              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${DocsCloudFrontOriginAccessIdentity}"
+              OriginAccessIdentity:
+                Fn::Join:
+                  - ""
+                  - - "origin-access-identity/cloudfront/"
+                    - !Ref DocsCloudFrontOriginAccessIdentity
           # - DomainName: example.org # Dummy origin is used for Lambda@Edge functions, keep this as-is
           - DomainName: { "Fn::ImportValue": !Sub "${StackName}-S3MainBucketRegionalDomainName-${Env}" }
             Id: dummy-origin
-            OriginPath: "/doc"
             CustomOriginConfig:
               OriginProtocolPolicy: match-viewer
         PriceClass: "PriceClass_All"
