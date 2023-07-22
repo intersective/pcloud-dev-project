@@ -86,3 +86,8 @@ Outputs:
     Value: !GetAtt DocsCloudFrontOriginAccessIdentity.S3CanonicalUserId
     Export:
       Name: !Sub '${StackName}-DocsCloudFrontOaiS3CanonUserId-${Env}'
+  DomainNameDocsCloudFrontDistribution:
+    Description: For reference S3 Bucket
+    Value: !GetAtt DocsCloudFrontDistribution.DomainName
+    Export:
+      Name: !Sub '${StackName}-DomainNameDocsCloudFrontDistribution-${Env}'

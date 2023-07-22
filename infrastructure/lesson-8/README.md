@@ -3,7 +3,7 @@
 ### Host the Documentation using AWS Services
 
 
-Feel free to change `lessonEightStack` as the stack name, `lessonsevenlambda` parameter value for your lambda function name, S3ObjectUrl where the `.zip` file of the api is stored in the S3 Bucket and `lessonseventable` parameter value for the dynamodb table name.
+Feel free to change `lessonEightStack` as the stack name.
 
 
 ## Get Exports
