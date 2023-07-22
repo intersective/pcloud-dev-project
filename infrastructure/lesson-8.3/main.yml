@@ -65,6 +65,7 @@ Parameters:
 
 Resources:
   Route53RecordV2:
+    DependsOn: [DocusaurusCloudFrontDistribution]
     Type: "AWS::Route53::RecordSetGroup"
     Properties:
       HostedZoneId:
@@ -74,9 +75,7 @@ Resources:
           Type: CNAME
           TTL: "3200"
           ResourceRecords:
-            - {
-                "Fn::ImportValue": !Sub "${StackName}-DomainNameDocsCloudFrontDistribution-${Env}",
-              }
+            - !GetAtt 'DocusaurusCloudFrontDistribution.DomainName'
 
   LambdaEdgeProtection:
     Type: AWS::Serverless::Application
