@@ -16,9 +16,9 @@ export S3BucketRegionalDomainName=$(aws cloudformation list-exports --query "Exp
 
 
 ## Create
-aws cloudformation package --template-file infrastructure/lesson-8/main.yml --output-template-file tmp/lesson-8.yml --s3-bucket pcloud-lessonsixs3-dev --s3-prefix deployment-packages 
+aws cloudformation package --template-file infrastructure/lesson-8.1/main.yml --output-template-file tmp/lesson-8.1.yml --s3-bucket pcloud-lessonsixs3-dev --s3-prefix deployment-packages 
 
-aws cloudformation deploy --template-file tmp/lesson-8.yml --stack-name lessonEightStack --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND CAPABILITY_IAM  --parameter-overrides BucketName=$BucketName S3BucketRegionalDomainName=$S3BucketRegionalDomainName
+aws cloudformation deploy --template-file tmp/lesson-8.1.yml --stack-name lessonEightStack --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND CAPABILITY_IAM  --parameter-overrides BucketName=$BucketName S3BucketRegionalDomainName=$S3BucketRegionalDomainName
 
 
 ### Copy to S3
