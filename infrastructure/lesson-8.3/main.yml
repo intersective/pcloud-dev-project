@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 
 Description: cloudformation template for Practera Cloud Projects web app +auth + cognito infrastructure
@@ -7,21 +7,24 @@ Metadata:
   Authors:
     Description: Based on AWS best practise.
   License:
-    Description: Copyright 2023 Intersective PTY LTD and its affiliates. All Rights
+    Description:
+      Copyright 2023 Intersective PTY LTD and its affiliates. All Rights
       Reserved.
 
 Parameters:
   StackName:
     ConstraintDescription: This will be unique string to represent our stack.
     Default: ""
-    Description: A client/project/product unique name for the stack to idnetify later.
+    Description:
+      A client/project/product unique name for the stack to idnetify later.
       This string can include numbers, lowercase letters, uppercase letters, and hyphens
       (-). It cannot start or end with a hyphen (-).
     Type: String
   AuthStackName:
     ConstraintDescription: This will be unique string to represent our stack.
     Default: ""
-    Description: A client/project/product unique name for the stack to idnetify later.
+    Description:
+      A client/project/product unique name for the stack to idnetify later.
       This string can include numbers, lowercase letters, uppercase letters, and hyphens
       (-). It cannot start or end with a hyphen (-).
     Type: String
@@ -49,24 +52,25 @@ Parameters:
         "X-Content-Type-Options": "nosniff"
       }
   AppStackPostfix:
-    Description: 'Appended to the stack name to denote the app stacks'
+    Description: "Appended to the stack name to denote the app stacks"
     Type: String
     Default: app
   RootDomainName:
-    Description: 'The root domain name used for the sites'
+    Description: "The root domain name used for the sites"
     Type: String
     Default: pcloud.practeraco.de
 
-
 Resources:
-
   Route53RecordV2:
-    Type: 'AWS::Route53::RecordSetGroup'
+    Type: "AWS::Route53::RecordSetGroup"
     Properties:
-      HostedZoneId:  {'Fn::ImportValue': !Sub '${AuthStackName}-HostedZoneId-${Env}'}
+      HostedZoneId:
+        { "Fn::ImportValue": !Sub "${AuthStackName}-HostedZoneId-${Env}" }
       RecordSets:
-      - Name: !Sub '${StackName}-${AppStackPostfix}.${RootDomainName}'
-        Type: CNAME
-        TTL: '3200'
-        ResourceRecords:
-          - !ImportValue !Sub '${StackName}-DomainNameDocsCloudFrontDistribution-${Env}'
+        - Name: !Sub "${StackName}-${AppStackPostfix}.${RootDomainName}"
+          Type: CNAME
+          TTL: "3200"
+          ResourceRecords:
+            - {
+                "Fn::ImportValue": !Sub "${StackName}-DomainNameDocsCloudFrontDistribution-${Env}",
+              }
