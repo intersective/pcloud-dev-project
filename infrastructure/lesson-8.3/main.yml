@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: cloudformation template for Practera Cloud Projects web app +auth + cognito infrastructure
+
+Metadata:
+  Authors:
+    Description: Based on AWS best practise.
+  License:
+    Description: Copyright 2023 Intersective PTY LTD and its affiliates. All Rights
+      Reserved.
+
+Parameters:
+  StackName:
+    ConstraintDescription: This will be unique string to represent our stack.
+    Default: ""
+    Description: A client/project/product unique name for the stack to idnetify later.
+      This string can include numbers, lowercase letters, uppercase letters, and hyphens
+      (-). It cannot start or end with a hyphen (-).
+    Type: String
+  AuthStackName:
+    ConstraintDescription: This will be unique string to represent our stack.
+    Default: ""
+    Description: A client/project/product unique name for the stack to idnetify later.
+      This string can include numbers, lowercase letters, uppercase letters, and hyphens
+      (-). It cannot start or end with a hyphen (-).
+    Type: String
+  Env:
+    Description: Environment type.
+    Default: dev
+    Type: String
+    ConstraintDescription: must specify dev,test,live.
+
+  ## You are unlikely to want to override these parameters
+  SemanticVersion:
+    Type: String
+    Description: Semantic version of the back end
+    Default: 2.1.5
+  HttpHeaders:
+    Type: String
+    Description: The HTTP headers to set on all responses from CloudFront. Defaults are illustrations only and contain a report-only Cloud Security Policy -- adjust for your application
+    Default: >-
+      {
+        "Content-Security-Policy-Report-Only": "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; connect-src 'self' https://*.amazonaws.com https://*.amazoncognito.com",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Referrer-Policy": "same-origin",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Frame-Options": "DENY",
+        "X-Content-Type-Options": "nosniff"
+      }
+  AppStackPostfix:
+    Description: 'Appended to the stack name to denote the app stacks'
+    Type: String
+    Default: app
+  RootDomainName:
+    Description: 'The root domain name used for the sites'
+    Type: String
+    Default: pcloud.practeraco.de
+
+
+Resources:
+
+  Route53RecordV2:
+    Type: 'AWS::Route53::RecordSetGroup'
+    Properties:
+      HostedZoneId:  {'Fn::ImportValue': !Sub '${AuthStackName}-HostedZoneId-${Env}'}
+      RecordSets:
+      - Name: !Sub '${StackName}-${AppStackPostfix}.${RootDomainName}'
+        Type: CNAME
+        TTL: '3200'
+        ResourceRecords:
+          - !ImportValue !Sub '${StackName}-DomainNameDocsCloudFrontDistribution-${Env}'
