@@ -82,12 +82,23 @@ Resources:
 
 Outputs:
   DocsCloudFrontOaiS3CanonUserId:
-    Description: For reference S3 Bucket
+    Description: For reference S3 Bucket DocsCloudFrontOaiS3CanonUserId
     Value: !GetAtt DocsCloudFrontOriginAccessIdentity.S3CanonicalUserId
     Export:
       Name: !Sub '${StackName}-DocsCloudFrontOaiS3CanonUserId-${Env}'
   DomainNameDocsCloudFrontDistribution:
-    Description: For reference S3 Bucket
+    Description: For CDN DomainName
     Value: !GetAtt DocsCloudFrontDistribution.DomainName
     Export:
       Name: !Sub '${StackName}-DomainNameDocsCloudFrontDistribution-${Env}'
+  DocsCloudFrontSecurityHeaderResponse:
+    Description: For Security Header Response
+    Value: !Ref DocsCloudFrontSecurityHeaderResponse
+    Export:
+      Name: !Sub '${StackName}-DocsCloudFrontSecurityHeaderResponse-${Env}'
+  DocsCloudFrontOriginAccessIdentity:
+    Description: For CDN Origin Access Identity
+    Value: !Ref DocsCloudFrontOriginAccessIdentity
+    Export:
+      Name: !Sub '${StackName}-DocsCloudFrontOriginAccessIdentity-${Env}'
+      
