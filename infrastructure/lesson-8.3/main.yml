@@ -71,7 +71,7 @@ Resources:
       HostedZoneId:
         { "Fn::ImportValue": !Sub "${AuthStackName}-HostedZoneId-${Env}" }
       RecordSets:
-        - Name: !Sub "${StackName}-${AppStackPostfix}.${RootDomainName}"
+        - Name: !Sub "${Env}-${StackName}-${AppStackPostfix}.${RootDomainName}"
           Type: CNAME
           TTL: "3200"
           ResourceRecords:
@@ -86,7 +86,7 @@ Resources:
       Parameters:
         CreateCloudFrontDistribution: "false"
         HttpHeaders: !Ref HttpHeaders
-        AlternateDomainNames: !Sub "${StackName}-${AppStackPostfix}.${RootDomainName}"
+        AlternateDomainNames: !Sub "${Env}-${StackName}-${AppStackPostfix}.${RootDomainName}"
         UserPoolArn:
           { "Fn::ImportValue": !Sub "${AuthStackName}-UserPoolArn-${Env}" }
         UserPoolClientId:
@@ -102,7 +102,7 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - !Sub "${StackName}-${AppStackPostfix}.${RootDomainName}"
+          - !Sub "${Env}-${StackName}-${AppStackPostfix}.${RootDomainName}"
         Comment: "Cloudfront Origin identity for DocusaurusS3BUCKET"
         CacheBehaviors:
           - PathPattern: /parseauth
