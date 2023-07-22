@@ -14,7 +14,7 @@ Metadata:
 Parameters:
   StackName:
     ConstraintDescription: This will be unique string to represent our stack.
-    Default: "pcloud"
+    Default: "pclouda"
     Description:
       A client/project/product unique name for the stack to idnetify later.
       This string can include numbers, lowercase letters, uppercase letters, and hyphens
@@ -70,7 +70,7 @@ Resources:
       HostedZoneId:
         { "Fn::ImportValue": !Sub "${AuthStackName}-HostedZoneId-${Env}" }
       RecordSets:
-        - Name: !Sub "${StackName}foo-${AppStackPostfix}.${RootDomainName}"
+        - Name: !Sub "${StackName}-${AppStackPostfix}.${RootDomainName}"
           Type: CNAME
           TTL: "3200"
           ResourceRecords:
@@ -103,7 +103,7 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - !Sub "${StackName}foo-${AppStackPostfix}.${RootDomainName}"
+          - !Sub "${StackName}-${AppStackPostfix}.${RootDomainName}"
         Comment: "Cloudfront Origin identity for DocusaurusS3BUCKET"
         CacheBehaviors:
           - PathPattern: /parseauth
