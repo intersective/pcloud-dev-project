@@ -12,6 +12,8 @@ Metadata:
 Parameters:
   BucketName:
     Type: String
+  Email:
+    Type: String
   StackName:
     Default: pcloud
     Type: String
@@ -47,6 +49,11 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
+      Tags:
+        - Key: Environment
+          Value: !Ref Env
+        - Key: Email
+          Value: !Ref Email
 
 Outputs:
   S3MainBucketRef:
