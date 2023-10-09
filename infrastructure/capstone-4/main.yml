@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: DynamoDB cloudformation template storage-  for Practera Cloud Projects infrastructure
+
+Metadata:
+  Authors:
+    Description: Based on AWS best practise.
+  License:
+    Description:
+      Copyright 2022 Intersective PTY LTD and its affiliates. All Rights
+      Reserved.
+
+Parameters:
+  TableName:
+    Type: String
+    Description: Name of the DynamoDB Table
+  StackName:
+    Default: pcloud
+    Type: String
+  Env:
+    Description: Environment type.
+    Default: dev
+    Type: String
+    ConstraintDescription: must specify dev,test,live.
+  Email:
+    Type: String
+
+Resources:
+  DynamoDBTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      TableName: !Sub "${StackName}-${TableName}-${Env}"
+      AttributeDefinitions:
+        - AttributeName: postId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: postId
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      Tags:
+        - Key: "Email"
+          Value: !Ref Email
+
+Outputs:
+  DynamoDBTableArn:
+    Description: DynamoDB table ARN
+    Value: !GetAtt DynamoDBTable.Arn
+    Export:
+      Name: !Sub "${StackName}-DynamoDBTableArn-${Env}"
