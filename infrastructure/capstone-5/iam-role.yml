@@ -17,9 +17,9 @@ Parameters:
 Resources:
   LambdaExecutionRole:
     Type: AWS::IAM::Role
-    Description: IAM Role for Lambda Function
     Properties:
       RoleName: !Sub '${StackName}-${LambdaFunctionName}-${Env}'
+      Description: IAM Role for Lambda Function
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:

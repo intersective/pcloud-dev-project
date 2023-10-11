@@ -32,7 +32,6 @@ Resources:
         Env: !Ref Env
 
   LambdaFnStack:
-    DependsOn: [IAMRoleStack]
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: ./lambda-fn.yml
@@ -43,17 +42,7 @@ Resources:
         LambdaExecutionRoleArn: !GetAtt IAMRoleStack.Outputs.LambdaExecutionRoleArn
         TableName: !Ref TableName
   
-  DynamoDbStack:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: ./dynamodb.yml
-      Parameters:
-        TableName: !Ref TableName
-        StackName: !Ref StackName
-        Env: !Ref Env
-
   APIGatewayStack:
-    DependsOn: [LambdaFnStack]
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: ./api-gateway.yml
