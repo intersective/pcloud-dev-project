@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template for Lambda use case IAM role with DynamoDB access
+
+Parameters:
+  CodePipelineName:
+    Type: String
+  Email:
+    Type: String
+  StackName:
+    Default: pcloud
+    Type: String
+  Env:
+    Description: Environment type.
+    Default: dev
+    Type: String
+    ConstraintDescription: must specify dev,test,live.
+  BucketName:
+    Type: String
+  RepositoryName:
+    Type: String
+  BranchName:
+    Type: String
+  CodeBuildName:
+    Type: String
+  CodeCommitHTTPSUrl:
+    Type: String
+
+Resources:
+
+  CodeBuildStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./codebuild.yml
+      Parameters:
+        StackName: !Ref StackName
+        Env: !Ref Env
+        Email: !Ref Email
+        CodeBuildName: !Ref CodeBuildName
+        CodeCommitHTTPSUrl: !Ref CodeCommitHTTPSUrl
+
+  CodePipelineStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./codepipeline.yml
+      Parameters:
+        StackName: !Ref StackName
+        Env: !Ref Env
+        CodePipelineName: !Ref CodePipelineName
+        Email: !Ref Email
+        BucketName: !Ref BucketName
+        RepositoryName: !Ref RepositoryName
+        BranchName: !Ref BranchName
+        CodeBuildName: !Ref CodeBuildName
+
+
